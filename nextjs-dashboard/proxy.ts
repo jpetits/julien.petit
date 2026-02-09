@@ -7,24 +7,21 @@ import { evmPaywall } from "@x402/paywall/evm";
 import { svmPaywall } from "@x402/paywall/svm";
 import { declareDiscoveryExtension } from "@x402/extensions/bazaar";
 
-// const facilitatorUrl = process.env.FACILITATOR_URL;
-// export const evmAddress = process.env.EVM_ADDRESS as `0x${string}`;
-// export const svmAddress = process.env.SVM_ADDRESS;
-export const facilitatorUrl = "http://localhost:3000/facilitator";
-export const evmAddress = "0xevm";
+export const facilitatorUrl = process.env.FACILITATOR_URL;
+export const evmAddress = process.env.RESOURCE_EVM_ADDRESS || "";
 export const svmAddress = "0xsol";
 
-if (!facilitatorUrl) {
-  console.error("❌ FACILITATOR_URL environment variable is required");
-  process.exit(1);
-}
+// if (!facilitatorUrl) {
+//   console.error("❌ FACILITATOR_URL environment variable is required");
+//   process.exit(1);
+// }
 
-if (!evmAddress || !svmAddress) {
-  console.error(
-    "❌ EVM_ADDRESS and SVM_ADDRESS environment variables are required",
-  );
-  process.exit(1);
-}
+// if (!evmAddress || !svmAddress) {
+//   console.error(
+//     "❌ EVM_ADDRESS and SVM_ADDRESS environment variables are required",
+//   );
+//   process.exit(1);
+// }
 
 // Create HTTP facilitator client
 const facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
@@ -47,10 +44,9 @@ export const paywall = createPaywall()
   })
   .build();
 
-// Build proxy
 export const proxy = paymentProxy(
   {
-    "/protected": {
+    "/api/protected": {
       accepts: [
         {
           scheme: "exact",
@@ -79,5 +75,5 @@ export const proxy = paymentProxy(
 
 // Configure which paths the proxy should run on
 export const config = {
-  matcher: ["/protected/:path*"],
+  matcher: ["/api/protected/:path*"],
 };

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withX402 } from "@x402/next";
 import { declareDiscoveryExtension } from "@x402/extensions/bazaar";
-import { server, paywall, evmAddress, svmAddress } from "../../../proxy";
+import { server, paywall, evmAddress, svmAddress } from "../../../middleware";
 
 /**
  * Weather API endpoint handler
