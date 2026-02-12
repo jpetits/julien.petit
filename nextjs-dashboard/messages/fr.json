@@ -77,6 +77,11 @@
     "totalPending": "Total en attente",
     "totalPaid": "Total payé"
   },
+  "InvoiceNotFound": {
+    "title": "404 Introuvable",
+    "description": "La facture demandée est introuvable.",
+    "back": "Retour"
+  },
   "LoginForm": {
     "title": "Veuillez vous connecter pour continuer.",
     "email": "E-mail",

@@ -8,6 +8,7 @@ export default async function Page() {
   const t = await getTranslations("Breadcrumbs");
   const customers = await fetchCustomers();
   const invoicesRoute = await generateRoute("invoices");
+  const invoicesCreateRoute = await generateRoute("createInvoice");
 
   return (
     <main>
@@ -16,7 +17,7 @@ export default async function Page() {
           { label: t("invoices"), href: invoicesRoute },
           {
             label: t("createInvoice"),
-            href: "/dashboard/invoices/create",
+            href: invoicesCreateRoute,
             active: true,
           },
         ]}

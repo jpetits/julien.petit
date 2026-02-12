@@ -77,6 +77,11 @@
     "totalPending": "Total Pending",
     "totalPaid": "Total Paid"
   },
+  "InvoiceNotFound": {
+    "title": "404 Not Found",
+    "description": "Could not find the requested invoice.",
+    "back": "Go Back"
+  },
   "LoginForm": {
     "title": "Please log in to continue.",
     "email": "Email",
