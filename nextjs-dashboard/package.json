@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@radix-ui/react-select": "^2.2.6",
     "@tailwindcss/forms": "^0.5.10",
     "@types/negotiator": "^0.6.4",
     "@x402/core": "^2.3.0",

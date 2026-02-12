@@ -3,6 +3,7 @@ import NavLinks from "@/src/app/ui/dashboard/nav-links";
 import AcmeLogo from "@/src/app/ui/acme-logo";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { getTranslations } from "next-intl/server";
+import LocaleSwitcher from "@/src/app/ui/dashboard/locale-switcher";
 
 export default async function SideNav() {
   const t = await getTranslations("Navigation");
@@ -16,6 +17,7 @@ export default async function SideNav() {
           <AcmeLogo />
         </div>
       </Link>
+      <LocaleSwitcher />
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>

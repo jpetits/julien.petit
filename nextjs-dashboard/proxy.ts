@@ -9,6 +9,7 @@ import { declareDiscoveryExtension } from "@x402/extensions/bazaar";
 import { NextRequest, NextResponse } from "next/server";
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
+import { routing } from "@/src/i18n/routing";
 
 const PUBLIC_FILE = /\.(.*)$/;
 export const facilitatorUrl = process.env.FACILITATOR_URL;
@@ -87,13 +88,12 @@ export async function proxy(req: NextRequest) {
     return;
   }
 
-  // Maps locale code → URL prefix (must match routing.ts prefixes)
-  const localePrefix: Record<string, string> = {
-    en: "/en",
-    fr: "/fr",
-  };
-  const locales = Object.keys(localePrefix);
-  const defaultLocale = "fr";
+  const { locales, defaultLocale } = routing;
+  // Build prefix map from routing config: { en: "/en", fr: "/fr", ... }
+  const prefixes = routing.localePrefix as { mode: string; prefixes?: Record<string, string> };
+  const localePrefix = Object.fromEntries(
+    locales.map((locale) => [locale, prefixes?.prefixes?.[locale] ?? `/${locale}`]),
+  );
 
   const pathnameHasLocale = locales.some(
     (locale) =>

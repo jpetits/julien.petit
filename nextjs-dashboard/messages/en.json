@@ -3,7 +3,10 @@
     "home": "Home",
     "invoices": "Invoices",
     "customers": "Customers",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "signIn": "Sign In",
+    "en": "English",
+    "fr": "French"
   },
   "Dashboard": {
     "title": "Dashboard"

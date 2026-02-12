@@ -6,6 +6,8 @@ import { invoices } from "@/src/app/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { generateRoute } from "@/src/routing/generate";
+import { ROUTES } from "@/src/routing/constants";
 
 const FormSchema = z.object({
   id: z.string(),
@@ -36,8 +38,9 @@ export async function createInvoice(formData: FormData) {
     console.error("Database Error: Failed to Create Invoice.", error);
     return;
   }
-  revalidatePath("/dashboard/invoices");
-  redirect("/dashboard/invoices");
+  const invoicePath = await generateRoute(ROUTES.invoices);
+  revalidatePath(invoicePath);
+  redirect(invoicePath);
 }
 
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
@@ -60,17 +63,19 @@ export async function updateInvoice(id: string, formData: FormData) {
     return;
   }
 
-  revalidatePath("/dashboard/invoices");
-  redirect("/dashboard/invoices");
+  const invoicePath = await generateRoute(ROUTES.invoices);
+  revalidatePath(invoicePath);
+  redirect(invoicePath);
 }
 
 export async function deleteInvoice(id: string) {
-  throw new Error("Failed to Delete Invoice");
+  // throw new Error("Failed to Delete Invoice");
   try {
     await db.delete(invoices).where(eq(invoices.id, id));
   } catch (error) {
     console.error("Database Error: Failed to Delete Invoice.", error);
     return;
   }
-  revalidatePath("/dashboard/invoices");
+
+  revalidatePath(await generateRoute(ROUTES.invoices));
 }

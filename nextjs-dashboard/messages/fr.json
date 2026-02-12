@@ -3,7 +3,10 @@
     "home": "Accueil",
     "invoices": "Factures",
     "customers": "Clients",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "signIn": "Se connecter",
+    "en": "Anglais",
+    "fr": "Français"
   },
   "Dashboard": {
     "title": "Tableau de bord"

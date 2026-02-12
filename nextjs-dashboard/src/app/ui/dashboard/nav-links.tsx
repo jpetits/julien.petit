@@ -6,30 +6,39 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import clsx from "clsx";
+import { ROUTES } from "@/src/routing/constants";
+import { Route } from "next";
 
-const links = [
-  { key: "home" as const, href: "/dashboard", icon: HomeIcon },
-  { key: "invoices" as const, href: "/dashboard/invoices", icon: DocumentDuplicateIcon },
-  { key: "customers" as const, href: "/dashboard/customers", icon: UserGroupIcon },
+const NAV_LINKS = [
+  { key: "home" as const, path: ROUTES.dashboard, icon: HomeIcon },
+  {
+    key: "invoices" as const,
+    path: ROUTES.invoices,
+    icon: DocumentDuplicateIcon,
+  },
+  { key: "customers" as const, path: ROUTES.customers, icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {
   const t = useTranslations("Navigation");
   const pathname = usePathname();
+  const locale = useLocale();
+
   return (
     <>
-      {links.map((link) => {
+      {NAV_LINKS.map((link) => {
         const LinkIcon = link.icon;
+        const href = `/${locale}${link.path}`;
         return (
           <Link
             key={link.key}
-            href={{ pathname: link.href }}
+            href={href as Route}
             className={clsx(
               "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
               {
-                "bg-sky-100 text-blue-600": pathname === link.href,
+                "bg-sky-100 text-blue-600": pathname === href,
               },
             )}
           >
