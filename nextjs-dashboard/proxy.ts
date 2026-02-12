@@ -6,7 +6,11 @@ import { createPaywall } from "@x402/paywall";
 import { evmPaywall } from "@x402/paywall/evm";
 import { svmPaywall } from "@x402/paywall/svm";
 import { declareDiscoveryExtension } from "@x402/extensions/bazaar";
+import { NextRequest, NextResponse } from "next/server";
+import { match } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
 
+const PUBLIC_FILE = /\.(.*)$/;
 export const facilitatorUrl = process.env.FACILITATOR_URL;
 export const evmAddress = process.env.RESOURCE_EVM_ADDRESS || "";
 export const svmAddress = "0xsol";
@@ -44,36 +48,82 @@ export const paywall = createPaywall()
   })
   .build();
 
-export const proxy = paymentProxy(
-  {
-    "/api/protected": {
-      accepts: [
-        {
-          scheme: "exact",
-          price: "$0.01",
-          network: "eip155:84532", // base-sepolia
-          payTo: evmAddress,
+export async function proxy(req: NextRequest) {
+  if (req.nextUrl.pathname.includes("/api/protected/")) {
+    return paymentProxy(
+      {
+        "/api/protected": {
+          accepts: [
+            {
+              scheme: "exact",
+              price: "$0.01",
+              network: "eip155:84532", // base-sepolia
+              payTo: evmAddress,
+            },
+            {
+              scheme: "exact",
+              price: "$0.01",
+              network: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", // solana devnet
+              payTo: svmAddress,
+            },
+          ],
+          description: "Premium music: x402 Remix",
+          mimeType: "application/json",
+          extensions: {
+            ...declareDiscoveryExtension({}),
+          },
         },
-        {
-          scheme: "exact",
-          price: "$0.01",
-          network: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", // solana devnet
-          payTo: svmAddress,
-        },
-      ],
-      description: "Premium music: x402 Remix",
-      mimeType: "application/json",
-      extensions: {
-        ...declareDiscoveryExtension({}),
       },
-    },
-  },
-  server,
-  undefined, // paywallConfig (using custom paywall instead)
-  paywall, // custom paywall provider
-);
+      server,
+      undefined, // paywallConfig (using custom paywall instead)
+      paywall, // custom paywall provider
+    );
+  }
+  if (
+    req.nextUrl.pathname.startsWith("/_next") ||
+    req.nextUrl.pathname.includes("/api/") ||
+    PUBLIC_FILE.test(req.nextUrl.pathname)
+  ) {
+    return;
+  }
 
-// Configure which paths the proxy should run on
-export const config = {
-  matcher: ["/api/protected/:path*"],
-};
+  // Maps locale code → URL prefix (must match routing.ts prefixes)
+  const localePrefix: Record<string, string> = {
+    en: "/en",
+    fr: "/fr",
+  };
+  const locales = Object.keys(localePrefix);
+  const defaultLocale = "fr";
+
+  const pathnameHasLocale = locales.some(
+    (locale) =>
+      req.nextUrl.pathname.startsWith(`${localePrefix[locale]}/`) ||
+      req.nextUrl.pathname === localePrefix[locale],
+  );
+
+  if (!pathnameHasLocale) {
+    const acceptLanguage = req.headers.get("accept-language") ?? "";
+    const languages = new Negotiator({
+      headers: { "accept-language": acceptLanguage },
+    }).languages();
+    const locale = match(languages, locales, defaultLocale);
+
+    return NextResponse.redirect(
+      new URL(
+        `${localePrefix[locale]}${req.nextUrl.pathname}${req.nextUrl.search}`,
+        req.url,
+      ),
+    );
+  }
+
+  const locale =
+    locales.find(
+      (l) =>
+        req.nextUrl.pathname.startsWith(`${localePrefix[l]}/`) ||
+        req.nextUrl.pathname === localePrefix[l],
+    ) ?? defaultLocale;
+
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("X-NEXT-INTL-LOCALE", locale);
+  return NextResponse.next({ request: { headers: requestHeaders } });
+}

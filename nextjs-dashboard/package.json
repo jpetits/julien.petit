@@ -10,6 +10,7 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/forms": "^0.5.10",
+    "@types/negotiator": "^0.6.4",
     "@x402/core": "^2.3.0",
     "@x402/evm": "^2.3.0",
     "@x402/extensions": "^2.3.0",
@@ -23,8 +24,10 @@
     "dotenv": "^17.2.4",
     "drizzle-orm": "^0.45.1",
     "lucide-react": "^0.563.0",
+    "negotiator": "^1.0.0",
     "next": "latest",
     "next-auth": "5.0.0-beta.25",
+    "next-intl": "^4.8.2",
     "postcss": "8.5.1",
     "postgres": "^3.4.6",
     "react": "latest",

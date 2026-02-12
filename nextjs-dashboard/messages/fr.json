@@ -1,0 +1,85 @@
+{
+  "Navigation": {
+    "home": "Accueil",
+    "invoices": "Factures",
+    "customers": "Clients",
+    "signOut": "Se déconnecter"
+  },
+  "Dashboard": {
+    "title": "Tableau de bord"
+  },
+  "Cards": {
+    "collected": "Encaissé",
+    "pending": "En attente",
+    "totalInvoices": "Total des factures",
+    "totalCustomers": "Total des clients"
+  },
+  "LatestInvoices": {
+    "title": "Dernières factures",
+    "updatedNow": "Mis à jour à l'instant"
+  },
+  "RevenueChart": {
+    "title": "Revenus récents",
+    "noData": "Aucune donnée disponible.",
+    "lastMonths": "12 derniers mois"
+  },
+  "InvoicesPage": {
+    "title": "Factures",
+    "searchPlaceholder": "Rechercher des factures..."
+  },
+  "InvoicesTable": {
+    "customer": "Client",
+    "email": "E-mail",
+    "amount": "Montant",
+    "date": "Date",
+    "status": "Statut",
+    "editLabel": "Modifier",
+    "deleteLabel": "Supprimer",
+    "createInvoice": "Créer une facture"
+  },
+  "InvoiceForm": {
+    "chooseCustomer": "Choisir un client",
+    "selectCustomer": "Sélectionner un client",
+    "chooseAmount": "Choisir un montant",
+    "enterAmount": "Entrer le montant en USD",
+    "setStatus": "Définir le statut de la facture",
+    "pending": "En attente",
+    "paid": "Payé",
+    "cancel": "Annuler",
+    "createInvoice": "Créer une facture",
+    "editInvoice": "Modifier la facture"
+  },
+  "InvoiceStatus": {
+    "pending": "En attente",
+    "paid": "Payé"
+  },
+  "Breadcrumbs": {
+    "invoices": "Factures",
+    "createInvoice": "Créer une facture",
+    "editInvoice": "Modifier la facture"
+  },
+  "InvoiceError": {
+    "title": "Une erreur s'est produite !",
+    "tryAgain": "Réessayer"
+  },
+  "CustomersTable": {
+    "title": "Clients",
+    "searchPlaceholder": "Rechercher des clients...",
+    "pending": "En attente",
+    "paid": "Payé",
+    "invoices": "factures",
+    "name": "Nom",
+    "email": "E-mail",
+    "totalInvoices": "Total des factures",
+    "totalPending": "Total en attente",
+    "totalPaid": "Total payé"
+  },
+  "LoginForm": {
+    "title": "Veuillez vous connecter pour continuer.",
+    "email": "E-mail",
+    "emailPlaceholder": "Entrez votre adresse e-mail",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez le mot de passe",
+    "login": "Se connecter"
+  }
+}

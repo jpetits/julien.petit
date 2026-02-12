@@ -1,0 +1,85 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "invoices": "Invoices",
+    "customers": "Customers",
+    "signOut": "Sign Out"
+  },
+  "Dashboard": {
+    "title": "Dashboard"
+  },
+  "Cards": {
+    "collected": "Collected",
+    "pending": "Pending",
+    "totalInvoices": "Total Invoices",
+    "totalCustomers": "Total Customers"
+  },
+  "LatestInvoices": {
+    "title": "Latest Invoices",
+    "updatedNow": "Updated just now"
+  },
+  "RevenueChart": {
+    "title": "Recent Revenue",
+    "noData": "No data available.",
+    "lastMonths": "Last 12 months"
+  },
+  "InvoicesPage": {
+    "title": "Invoices",
+    "searchPlaceholder": "Search invoices..."
+  },
+  "InvoicesTable": {
+    "customer": "Customer",
+    "email": "Email",
+    "amount": "Amount",
+    "date": "Date",
+    "status": "Status",
+    "editLabel": "Edit",
+    "deleteLabel": "Delete",
+    "createInvoice": "Create Invoice"
+  },
+  "InvoiceForm": {
+    "chooseCustomer": "Choose customer",
+    "selectCustomer": "Select a customer",
+    "chooseAmount": "Choose an amount",
+    "enterAmount": "Enter USD amount",
+    "setStatus": "Set the invoice status",
+    "pending": "Pending",
+    "paid": "Paid",
+    "cancel": "Cancel",
+    "createInvoice": "Create Invoice",
+    "editInvoice": "Edit Invoice"
+  },
+  "InvoiceStatus": {
+    "pending": "Pending",
+    "paid": "Paid"
+  },
+  "Breadcrumbs": {
+    "invoices": "Invoices",
+    "createInvoice": "Create Invoice",
+    "editInvoice": "Edit Invoice"
+  },
+  "InvoiceError": {
+    "title": "Something went wrong!",
+    "tryAgain": "Try again"
+  },
+  "CustomersTable": {
+    "title": "Customers",
+    "searchPlaceholder": "Search customers...",
+    "pending": "Pending",
+    "paid": "Paid",
+    "invoices": "invoices",
+    "name": "Name",
+    "email": "Email",
+    "totalInvoices": "Total Invoices",
+    "totalPending": "Total Pending",
+    "totalPaid": "Total Paid"
+  },
+  "LoginForm": {
+    "title": "Please log in to continue.",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "login": "Log in"
+  }
+}

@@ -1,6 +1,9 @@
 {
 	"dependencies": {
+		"@formatjs/intl-localematcher": "^0.8.1",
 		"drizzle-orm": "^0.45.1",
+		"negotiator": "^1.0.0",
+		"next-intl": "^4.8.2",
 		"pg": "^8.18.0"
 	},
 	"devDependencies": {
