@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/src/i18n/navigation";
 import NavLinks from "@/src/app/ui/dashboard/nav-links";
 import AcmeLogo from "@/src/app/ui/acme-logo";
 import { PowerIcon } from "@heroicons/react/24/outline";

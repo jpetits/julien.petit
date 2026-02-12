@@ -1,5 +1,6 @@
+"use client";
+
 import { CustomerField } from "@/src/app/lib/definitions";
-import Link from "next/link";
 import {
   CheckIcon,
   ClockIcon,
@@ -7,13 +8,22 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Button } from "@/src/app/ui/button";
-import { createInvoice } from "@/src/app/lib/actions";
-import { getTranslations } from "next-intl/server";
+import { createInvoice, State } from "@/src/app/lib/actions";
+import { useActionState } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/src/i18n/navigation";
+import { ROUTES } from "@/src/routing/constants";
 
-export default async function Form({ customers }: { customers: CustomerField[] }) {
-  const t = await getTranslations("InvoiceForm");
+export default async function Form({
+  customers,
+}: {
+  customers: CustomerField[];
+}) {
+  const initialState: State = { message: null, errors: {} };
+  const [state, formAction] = useActionState(createInvoice, initialState);
+  const t = await useTranslations("InvoiceForm");
   return (
-    <form action={createInvoice}>
+    <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -60,7 +70,6 @@ export default async function Form({ customers }: { customers: CustomerField[] }
           </div>
         </div>
 
-        {/* Invoice Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             {t("setStatus")}
@@ -103,7 +112,7 @@ export default async function Form({ customers }: { customers: CustomerField[] }
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/invoices"
+          href={ROUTES.invoices}
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           {t("cancel")}

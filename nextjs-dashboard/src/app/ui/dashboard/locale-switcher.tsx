@@ -1,6 +1,7 @@
 "use client";
-import { useLocale, useTranslations } from "next-intl";
+import { Locale, useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/src/i18n/navigation";
+import { useRouter as useNextRouter } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
 import { Globe } from "lucide-react";
 import {
@@ -14,11 +15,13 @@ import {
 export default function LocaleSwitcher() {
   const currentLocale = useLocale();
   const router = useRouter();
+  const nextRouter = useNextRouter();
   const pathname = usePathname();
   const t = useTranslations("Navigation");
 
-  function switchLocale(next: string) {
-    router.replace(pathname, { locale: next });
+  function switchLocale(locale: Locale) {
+    router.replace(pathname, { locale });
+    nextRouter.refresh();
   }
 
   return (

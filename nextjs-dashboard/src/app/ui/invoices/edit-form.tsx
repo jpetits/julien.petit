@@ -7,7 +7,7 @@ import {
   CurrencyDollarIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import { Link } from "@/src/i18n/navigation";
 import { Button } from "@/src/app/ui/button";
 import { updateInvoice } from "@/src/app/lib/actions";
 import { useTranslations } from "next-intl";

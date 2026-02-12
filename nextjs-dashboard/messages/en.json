@@ -50,7 +50,12 @@
     "paid": "Paid",
     "cancel": "Cancel",
     "createInvoice": "Create Invoice",
-    "editInvoice": "Edit Invoice"
+    "editInvoice": "Edit Invoice",
+    "errors": {
+      "customerRequired": "Please select a customer.",
+      "amountRequired": "Please enter an amount greater than $0.",
+      "statusRequired": "Please select an invoice status."
+    }
   },
   "InvoiceStatus": {
     "pending": "Pending",

@@ -1,6 +1,6 @@
 import AcmeLogo from "@/src/app/ui/acme-logo";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import { Link } from "@/src/i18n/navigation";
 import HeroDesktopImage from "@/public/hero-desktop.png";
 import HeroMobileImage from "@/public/hero-mobile.png";
 import styled from "styled-components";

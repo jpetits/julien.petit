@@ -50,7 +50,12 @@
     "paid": "Payé",
     "cancel": "Annuler",
     "createInvoice": "Créer une facture",
-    "editInvoice": "Modifier la facture"
+    "editInvoice": "Modifier la facture",
+    "errors": {
+      "customerRequired": "Veuillez sélectionner un client.",
+      "amountRequired": "Veuillez entrer un montant supérieur à 0 $.",
+      "statusRequired": "Veuillez sélectionner un statut de facture."
+    }
   },
   "InvoiceStatus": {
     "pending": "En attente",

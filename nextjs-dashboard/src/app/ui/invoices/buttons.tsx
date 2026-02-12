@@ -1,5 +1,5 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+import { Link } from "@/src/i18n/navigation";
 import { deleteInvoice } from "@/src/app/lib/actions";
 import { getTranslations } from "next-intl/server";
 
