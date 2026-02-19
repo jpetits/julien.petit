@@ -14,14 +14,10 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/src/i18n/navigation";
 import { ROUTES } from "@/src/routing/constants";
 
-export default async function Form({
-  customers,
-}: {
-  customers: CustomerField[];
-}) {
+export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createInvoice, initialState);
-  const t = await useTranslations("InvoiceForm");
+  const t = useTranslations("InvoiceForm");
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">

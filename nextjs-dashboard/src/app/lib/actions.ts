@@ -31,7 +31,10 @@ async function getInvoiceSchema() {
   });
 }
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoice(
+  prevState: State | undefined,
+  formData: FormData,
+) {
   const schema = (await getInvoiceSchema()).omit({ id: true, date: true });
   const validatedFields = schema.safeParse({
     customerId: formData.get("customerId"),

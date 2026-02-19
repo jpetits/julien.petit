@@ -1,9 +1,16 @@
-import "@/src/app/ui/global.css";
+import "@/styles/global.css";
 import { inter } from "@/src/app/ui/fonts";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale, getLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Acme Dashboard",
+  description: "The official Next.js Course Dashboard, built with App Router.",
+  metadataBase: new URL("https://next-learn-dashboard.vercel.sh"),
+};
 
 type Props = {
   children: React.ReactNode;

@@ -5,7 +5,7 @@ import HeroDesktopImage from "@/public/hero-desktop.png";
 import HeroMobileImage from "@/public/hero-mobile.png";
 import styled from "styled-components";
 import Image from "next/image";
-import styles from "@/src/app/ui/home.module.css";
+import styles from "@/styles/home.module.css";
 import { inter, lusitana } from "@/src/app/ui/fonts";
 
 export default async function Page() {
