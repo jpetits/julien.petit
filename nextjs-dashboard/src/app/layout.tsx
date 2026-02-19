@@ -14,23 +14,12 @@ export const metadata: Metadata = {
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 };
-export default async function RootLayout({ children, params }: Props) {
-  const { locale } = await params;
-  // if (!hasLocale(routing.locales, locale)) {
-  //   notFound();
-  // }
-  // setRequestLocale(locale);
-
-  // const messages = await getMessages();
-  // const locale = await getLocale();
+export default async function RootLayout({ children }: Props) {
   return (
-    <html lang={locale}>
+    <html>
       <body className={`${inter.className} antialiased`}>
-        <NextIntlClientProvider locale={locale}>
-          {children}
-        </NextIntlClientProvider>
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
   );
