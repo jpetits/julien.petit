@@ -1,0 +1,7 @@
+# Block all crawlers for /invoices
+User-agent: *
+Disallow: /invoices
+ 
+# Allow all crawlers
+User-agent: *
+Allow: /
