@@ -1,129 +1,19 @@
-import { paymentProxy } from "@x402/next";
-import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
-import { registerExactEvmScheme } from "@x402/evm/exact/server";
-import { registerExactSvmScheme } from "@x402/svm/exact/server";
-import { createPaywall } from "@x402/paywall";
-import { evmPaywall } from "@x402/paywall/evm";
-import { svmPaywall } from "@x402/paywall/svm";
-import { declareDiscoveryExtension } from "@x402/extensions/bazaar";
 import { NextRequest, NextResponse } from "next/server";
-import { match } from "@formatjs/intl-localematcher";
-import Negotiator from "negotiator";
-import { routing } from "@/src/i18n/routing";
+import paymentProxy from "@/proxy/x402Proxy";
+import { langProxy } from "./proxy/langProxy";
+import { authConfig } from "./auth.config";
+import NextAuth from "next-auth";
 
-const PUBLIC_FILE = /\.(.*)$/;
-export const facilitatorUrl = process.env.FACILITATOR_URL;
-export const evmAddress = process.env.RESOURCE_EVM_ADDRESS || "";
-export const svmAddress = "0xsol";
+export default NextAuth(authConfig).auth;
 
-// if (!facilitatorUrl) {
-//   console.error("❌ FACILITATOR_URL environment variable is required");
-//   process.exit(1);
-// }
-
-// if (!evmAddress || !svmAddress) {
-//   console.error(
-//     "❌ EVM_ADDRESS and SVM_ADDRESS environment variables are required",
-//   );
-//   process.exit(1);
-// }
-
-// Create HTTP facilitator client
-const facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
-
-// Create x402 resource server
-export const server = new x402ResourceServer(facilitatorClient);
-
-// Register schemes
-registerExactEvmScheme(server);
-registerExactSvmScheme(server);
-
-// Build paywall
-export const paywall = createPaywall()
-  .withNetwork(evmPaywall)
-  .withNetwork(svmPaywall)
-  .withConfig({
-    appName: process.env.APP_NAME || "Next x402 Demo",
-    appLogo: process.env.APP_LOGO || "/x402-icon-blue.png",
-    testnet: true,
-  })
-  .build();
-
-export async function proxy(req: NextRequest) {
-  if (req.nextUrl.pathname.includes("/api/protected/")) {
-    return paymentProxy(
-      {
-        "/api/protected": {
-          accepts: [
-            {
-              scheme: "exact",
-              price: "$0.01",
-              network: "eip155:84532", // base-sepolia
-              payTo: evmAddress,
-            },
-            {
-              scheme: "exact",
-              price: "$0.01",
-              network: "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", // solana devnet
-              payTo: svmAddress,
-            },
-          ],
-          description: "Premium music: x402 Remix",
-          mimeType: "application/json",
-          extensions: {
-            ...declareDiscoveryExtension({}),
-          },
-        },
-      },
-      server,
-      undefined, // paywallConfig (using custom paywall instead)
-      paywall, // custom paywall provider
-    );
-  }
-  if (
-    req.nextUrl.pathname.startsWith("/_next") ||
-    req.nextUrl.pathname.includes("/api/") ||
-    PUBLIC_FILE.test(req.nextUrl.pathname)
-  ) {
-    return;
-  }
-
-  const { locales, defaultLocale } = routing;
-  // Build prefix map from routing config: { en: "/en", fr: "/fr", ... }
-  const prefixes = routing.localePrefix as { mode: string; prefixes?: Record<string, string> };
-  const localePrefix = Object.fromEntries(
-    locales.map((locale) => [locale, prefixes?.prefixes?.[locale] ?? `/${locale}`]),
-  );
-
-  const pathnameHasLocale = locales.some(
-    (locale) =>
-      req.nextUrl.pathname.startsWith(`${localePrefix[locale]}/`) ||
-      req.nextUrl.pathname === localePrefix[locale],
-  );
-
-  if (!pathnameHasLocale) {
-    const acceptLanguage = req.headers.get("accept-language") ?? "";
-    const languages = new Negotiator({
-      headers: { "accept-language": acceptLanguage },
-    }).languages();
-    const locale = match(languages, locales, defaultLocale);
-
-    return NextResponse.redirect(
-      new URL(
-        `${localePrefix[locale]}${req.nextUrl.pathname}${req.nextUrl.search}`,
-        req.url,
-      ),
-    );
-  }
-
-  const locale =
-    locales.find(
-      (l) =>
-        req.nextUrl.pathname.startsWith(`${localePrefix[l]}/`) ||
-        req.nextUrl.pathname === localePrefix[l],
-    ) ?? defaultLocale;
-
-  const requestHeaders = new Headers(req.headers);
-  requestHeaders.set("X-NEXT-INTL-LOCALE", locale);
-  return NextResponse.next({ request: { headers: requestHeaders } });
+export function proxy(req: NextRequest) {
+  // if (req.nextUrl.pathname.includes("/api/protected/")) {
+  //   return paymentProxy(req);
+  // }
+  return langProxy(req);
 }
+
+export const config = {
+  // https://nextjs.org/docs/app/api-reference/file-conventions/proxy#matcher
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
+};
